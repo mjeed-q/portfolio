@@ -429,7 +429,7 @@
                                 <div>
                                     <h4 class="font-medium text-gray-800">Email</h4>
                                     <p class="text-gray-600">AlqhtaniAbdulmaajeed@gmail.com</p>
-                                    <button onclick="window.location.href='mailto:abdulmajeed@example.com'" class="text-blue-600 hover:text-blue-800 text-sm mt-1 flex items-center">
+                                    <button onclick="window.location.href='mailto:AlqhtaniAbdulmaajeed@gmail.com'" class="text-blue-600 hover:text-blue-800 text-sm mt-1 flex items-center">
                                         Send email <i class="fas fa-arrow-right ml-1 text-xs"></i>
                                     </button>
                                 </div>
@@ -442,7 +442,7 @@
                                 <div>
                                     <h4 class="font-medium text-gray-800">LinkedIn</h4>
                                     <p class="text-gray-600">https://www.linkedin.com/in/abdulmajeed-alqhtani-8aa771342/</p>
-                                    <button onclick="window.open('https://linkedin.com/in/abdulmajeed-alqahtani', '_blank')" class="text-blue-600 hover:text-blue-800 text-sm mt-1 flex items-center">
+                                    <button onclick="window.open('https://www.linkedin.com/in/abdulmajeed-alqhtani-8aa771342', '_blank')" class="text-blue-600 hover:text-blue-800 text-sm mt-1 flex items-center">
                                         View profile <i class="fas fa-arrow-right ml-1 text-xs"></i>
                                     </button>
                                 </div>
@@ -538,7 +538,7 @@
 
     <script>
         // Show page function
-        function showPage(pageId) {
+        function showPage(pageId, pushState = true) {
             // Hide all pages
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active-page');
@@ -561,27 +561,53 @@
             
             // Close mobile menu if open
             document.getElementById('mobile-menu').classList.add('hidden');
+            
+            // Add to browser history
+            if (pushState) {
+                history.pushState({pageId}, '', `#${pageId}`);
+            }
         }
         
         // Mobile menu toggle
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+        document.getElementById('mobile-menu-btn').addEventListener('click', function(event) {
+            event.stopPropagation();
             const menu = document.getElementById('mobile-menu');
-            if (menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-            } else {
-                menu.classList.add('hidden');
-            }
+            menu.classList.toggle('hidden');
         });
         
         // Close mobile menu when clicking outside
         document.addEventListener('click', function(event) {
-            const menuBtn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');
+            const menuBtn = document.getElementById('mobile-menu-btn');
             
-            if (!menu.contains(event.target) && event.target !== menuBtn) {
+            if (!menu.contains(event.target) && event.target !== menuBtn && !menu.classList.contains('hidden')) {
                 menu.classList.add('hidden');
             }
         });
+
+        // Close menu when clicking a nav item
+        document.querySelectorAll('#mobile-menu .nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Handle browser back/forward button
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.pageId) {
+                showPage(event.state.pageId, false);
+            } else {
+                showPage('home', false);
+            }
+        });
+
+        // Handle initial page load with hash
+        if (window.location.hash) {
+            const pageId = window.location.hash.substring(1);
+            if (document.getElementById(pageId)) {
+                showPage(pageId, false);
+            }
+        }
     </script>
 </body>
 </html>
