@@ -40,7 +40,7 @@
     <!-- Header/Navigation -->
     <header class="bg-white shadow-sm sticky top-0 z-10">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-blue-600">Abdulmajeed Alqahtani</h1>
+            <h1 onclick="showPage('home')" class="text-xl font-bold text-blue-600 cursor-pointer hover:text-blue-800 transition">Abdulmajeed Alqahtani</h1>
             <nav class="hidden md:flex space-x-2">
                 <button onclick="showPage('home')" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition active">Home</button>
                 <button onclick="showPage('about')" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">About</button>
@@ -236,16 +236,55 @@
                     <!-- Project 4 -->
                     <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
                         <div class="h-48 bg-purple-100 flex items-center justify-center">
-                            <i class="fas fa-globe text-6xl text-purple-600"></i>
+                            <i class="fas fa-chart-line text-6xl text-purple-600"></i>
                         </div>
                         <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">Global Unemployment Analysis</h3>
-                            <p class="text-gray-600 mb-4">Analyzes World Bank data to visualize unemployment trends globally.</p>
+                            <h3 class="text-xl font-semibold mb-2">Stock Price Forecasting</h3>
+                            <p class="text-gray-600 mb-4">Uses historical daily returns to predict next-day closing prices with Random Forest.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
                                 <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">pandas</span>
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">matplotlib</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">yfinance</span>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">scikit-learn</span>
                             </div>
-                            <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/global-unemployment-analysis-world-bank-dataset" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                            <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/stock-price-forecasting-using-historical-daily-ret" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                                View Project <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 5 -->
+                    <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
+                        <div class="h-48 bg-red-100 flex items-center justify-center">
+                            <i class="fas fa-futbol text-6xl text-red-600"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">FIFA World Cup Analysis</h3>
+                            <p class="text-gray-600 mb-4">Analyzes historical match data for team performance and trends.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">pandas</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">seaborn</span>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">matplotlib</span>
+                            </div>
+                            <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/fifa-world-cup-match-data-analysis" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                                View Project <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 6 -->
+                    <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
+                        <div class="h-48 bg-green-100 flex items-center justify-center">
+                            <i class="fas fa-virus text-6xl text-green-600"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">COVID-19 Analysis</h3>
+                            <p class="text-gray-600 mb-4">Analyzes global COVID-19 trends with interactive visualizations.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">pandas</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">plotly</span>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">seaborn</span>
+                            </div>
+                            <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/covid-19-data-analysis-and-visualization" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
                                 View Project <i class="fas fa-arrow-right ml-2"></i>
                             </a>
                         </div>
@@ -346,7 +385,7 @@
                     <div class="bg-gray-50 px-8 py-6 flex flex-col sm:flex-row justify-between items-center">
                         <p class="text-gray-600 mb-4 sm:mb-0">Last updated: August 2025</p>
                         <div class="flex flex-wrap gap-4">
-                            <a href="https://drive.google.com/your-resume-link" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition flex items-center">
+                            <a href="https://drive.google.com/uc?export=download&id=1nuhf4yJUADXPgGejSbCy90TOYWLZygHX" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition flex items-center">
                                 <i class="fas fa-download mr-2"></i> Download Resume
                             </a>
                             <button onclick="window.print()" class="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 px-6 py-2 rounded-lg transition flex items-center">
