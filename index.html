@@ -6,536 +6,739 @@
     <title>Abdulmajeed Alqahtani | Data Analyst</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        
-        .active-page {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .nav-btn.active {
-            background-color: #3b82f6;
-            color: white;
-        }
-        
-        .project-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noor:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+    /* التنسيقات الأساسية للموقع [cite: 3-9] */
+    .page {
+        display: none;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    .active-page {
+        display: block;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .nav-btn.active {
+        background-color: #3b82f6;
+        color: white;
+    }
+    
+    .project-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* --- تنسيقات دعم اللغة العربية (RTL) وخط Noor --- */
+
+    /* تفعيل الخط العربي عند تحويل اللغة */
+    :root[lang="ar"], [lang="ar"] body { 
+    font-family: 'Tajawal', sans-serif !important; 
+    }
+
+    /* ضبط اتجاه النصوص والمسافات المنطقية (تتغير تلقائياً مع اللغة) */
+    [dir="rtl"] .text-left { text-align: right; }
+    [dir="rtl"] .text-right { text-align: left; }
+
+    /* استخدام الهوامش المنطقية (Logical Properties) لضمان انسيابية التصميم */
+    .me-2 { margin-inline-end: 0.5rem; } /* مسافة بعد العنصر (يمين بالإنجليزية، يسار بالعربية) */
+    .ms-2 { margin-inline-start: 0.5rem; }
+    .me-4 { margin-inline-end: 1rem; }
+    .ms-5 { margin-inline-start: 1.25rem; }
+
+    /* ضبط حدود قسم التعليم لتنقلب في النسخة العربية  [cite: 37-41, 172-177] */
+    [dir="rtl"] .border-l-4 {
+        border-left-width: 0;
+        border-right-width: 4px;
+    }
+
+    /* عكس اتجاه أيقونة السهم في أزرار "عرض المشروع" */
+    [dir="rtl"] .fa-arrow-right {
+        transform: rotate(180deg);
+    }
+
+    /* تحسين مظهر السيرة الذاتية عند الطباعة  */
+    @media print {
+        header, footer, #lang-toggle, .bg-gray-50 { display: none !important; }
+        .page { display: block !important; }
+        .shadow-md { box-shadow: none !important; }
+        .max-w-4xl { max-width: 100% !important; }
+    }
+        #lang-toggle {
+         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+         #lang-toggle:hover {
+         transform: scale(1.05);
+         box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+</style>
 </head>
-<body class="bg-gray-50 min-h-screen font-sans">
+<body class="bg-gray-50 min-h-screen font-sans overflow-x-hidden">
+    
     <!-- Header/Navigation -->
     <header class="bg-white shadow-sm sticky top-0 z-10">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 onclick="showPage('home')" class="text-xl font-bold text-blue-600 cursor-pointer hover:text-blue-800 transition">Abdulmajeed Alqahtani</h1>
-            <nav class="hidden md:flex space-x-2">
-                <button onclick="showPage('home')" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition active">Home</button>
-                <button onclick="showPage('about')" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">About</button>
-                <button onclick="showPage('projects')" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">Projects</button>
-                <button onclick="showPage('cv')" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">CV</button>
-                <button onclick="showPage('contact')" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">Contact</button>
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 onclick="showPage('home')" data-i18n="name" class="text-xl font-bold text-blue-600 cursor-pointer hover:text-blue-800 transition">
+            Abdulmajeed Alqahtani
+        </h1>
+
+        <div class="flex items-center space-x-4 rtl:space-x-reverse">
+            <nav class="hidden md:flex space-x-2 rtl:space-x-reverse">
+                <button onclick="showPage('home')" data-i18n="nav_home" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition active">Home</button>
+                <button onclick="showPage('about')" data-i18n="nav_about" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">About</button>
+                <button onclick="showPage('projects')" data-i18n="nav_projects" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">Projects</button>
+                <button onclick="showPage('cv')" data-i18n="nav_cv" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">CV</button>
+                <button onclick="showPage('contact')" data-i18n="nav_contact" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">Contact</button>
             </nav>
+
+            <button id="lang-toggle" class="relative inline-flex items-center justify-center px-6 py-2 overflow-hidden font-medium text-white transition duration-300 ease-out bg-blue-600 rounded-full shadow-md group">
+                <span class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-blue-700 group-hover:translate-x-0 ease">
+                <i class="fas fa-language text-lg"></i>
+                </span>
+                <span class="absolute flex items-center justify-center w-full h-full text-white transition-all duration-300 transform group-hover:translate-x-full ease">العربية</span>
+                <span class="relative invisible">العربية</span>
+            </button> 
+
             <button id="mobile-menu-btn" class="md:hidden text-gray-600">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t py-2 px-4">
-            <div class="flex flex-col space-y-2">
-                <button onclick="showPage('home')" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 text-left transition active">Home</button>
-                <button onclick="showPage('about')" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 text-left transition">About</button>
-                <button onclick="showPage('projects')" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 text-left transition">Projects</button>
-                <button onclick="showPage('cv')" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 text-left transition">CV</button>
-                <button onclick="showPage('contact')" class="nav-btn px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 text-left transition">Contact</button>
-            </div>
+    </div>
+    
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t py-2 px-4">
+        <div class="flex flex-col space-y-2">
+            <button onclick="showPage('home')" data-i18n="nav_home" class="nav-btn px-4 py-2 rounded-lg text-left rtl:text-right transition active">Home</button>
+            <button onclick="showPage('about')" data-i18n="nav_about" class="nav-btn px-4 py-2 rounded-lg text-left rtl:text-right transition">About</button>
+            <button onclick="showPage('projects')" data-i18n="nav_projects" class="nav-btn px-4 py-2 rounded-lg text-left rtl:text-right transition">Projects</button>
+            <button onclick="showPage('cv')" data-i18n="nav_cv" class="nav-btn px-4 py-2 rounded-lg text-left rtl:text-right transition">CV</button>
+            <button onclick="showPage('contact')" data-i18n="nav_contact" class="nav-btn px-4 py-2 rounded-lg text-left rtl:text-right transition">Contact</button>
         </div>
-    </header>
-
+    </div>
+</header>
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 md:px-6 py-8 w-full">
         <!-- Home Page -->
         <div id="home" class="page active-page">
-            <section class="text-center py-12 md:py-20">
-                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4">Abdulmajeed Alqahtani</h1>
-                <p class="text-xl md:text-2xl text-gray-600 mb-8">Data Analysis, Python, and Excel</p>
-                
-                <div class="flex flex-wrap justify-center gap-4 mt-12">
-                    <button onclick="showPage('about')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition flex items-center">
-                        <i class="fas fa-user mr-2"></i> About Me
-                    </button>
-                    <button onclick="showPage('projects')" class="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 px-6 py-3 rounded-lg transition flex items-center">
-                        <i class="fas fa-project-diagram mr-2"></i> My Projects
-                    </button>
-                    <button onclick="showPage('cv')" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition flex items-center">
-                        <i class="fas fa-file-download mr-2"></i> Download CV
-                    </button>
-                    <button onclick="showPage('contact')" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition flex items-center">
-                        <i class="fas fa-envelope mr-2"></i> Contact Me
-                    </button>
-                </div>
-            </section>
+    <section class="text-center py-12 md:py-20">
+        <h1 data-i18n="hero_title" class="text-4xl md:text-6xl font-bold text-gray-800 mb-4">Abdulmajeed Alqahtani</h1>
+        <p data-i18n="hero_subtitle" class="text-xl md:text-2xl text-gray-600 mb-8">Data Analysis, Python, and Excel</p>
+        
+        <div class="flex flex-wrap justify-center gap-4 mt-12">
+            <button onclick="showPage('about')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition flex items-center">
+                <i class="fas fa-user me-2"></i> <span data-i18n="btn_about">About Me</span>
+            </button>
             
-            <section class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-                    <div class="text-blue-600 mb-4">
-                        <i class="fas fa-chart-bar text-4xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Data Analysis</h3>
-                    <p class="text-gray-600">Transforming raw data into meaningful insights that drive business decisions.</p>
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-                    <div class="text-green-600 mb-4">
-                        <i class="fab fa-python text-4xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Python</h3>
-                    <p class="text-gray-600">Building efficient data pipelines .</p>
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-                    <div class="text-yellow-600 mb-4">
-                        <i class="fas fa-file-excel text-4xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Excel</h3>
-                    <p class="text-gray-600">Creating powerful spreadsheets and dashboards.</p>
-                </div>
-            </section>
+            <button onclick="showPage('projects')" class="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 px-6 py-3 rounded-lg transition flex items-center">
+                <i class="fas fa-project-diagram me-2"></i> <span data-i18n="btn_projects">My Projects</span>
+            </button>
+            
+            <button onclick="showPage('cv')" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition flex items-center">
+                <i class="fas fa-file-download me-2"></i> <span data-i18n="btn_cv">Download CV</span>
+            </button>
+            
+            <button onclick="showPage('contact')" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition flex items-center">
+                <i class="fas fa-envelope me-2"></i> <span data-i18n="btn_contact">Contact Me</span>
+            </button>
         </div>
+    </section>
+    
+    <section class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+            <div class="text-blue-600 mb-4">
+                <i class="fas fa-chart-bar text-4xl"></i>
+            </div>
+            <h3 data-i18n="skill_title_1" class="text-xl font-semibold mb-2">Data Analysis</h3>
+            <p data-i18n="skill_desc_1" class="text-gray-600">Transforming raw data into meaningful insights that drive business decisions.</p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+            <div class="text-green-600 mb-4">
+                <i class="fab fa-python text-4xl"></i>
+            </div>
+            <h3 data-i18n="skill_title_2" class="text-xl font-semibold mb-2">Python</h3>
+            <p data-i18n="skill_desc_2" class="text-gray-600">Building efficient data pipelines.</p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+            <div class="text-yellow-600 mb-4">
+                <i class="fas fa-file-excel text-4xl"></i>
+            </div>
+            <h3 data-i18n="skill_title_3" class="text-xl font-semibold mb-2">Excel</h3>
+            <p data-i18n="skill_desc_3" class="text-gray-600">Creating powerful spreadsheets and dashboards.</p>
+        </div>
+    </section>
+</div>
 
         <!-- About Page -->
         <div id="about" class="page">
-            <section class="max-w-4xl mx-auto">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8">About Me</h2>
-                
-                <div class="flex flex-col md:flex-row gap-8">
-                    <div class="md:w-1/3">
-                        <div class="bg-gray-200 rounded-xl overflow-hidden aspect-square">
-                            <!-- Placeholder for profile image -->
-                            <div class="w-full h-full flex items-center justify-center bg-blue-100 text-blue-600">
-                                <i class="fas fa-user-tie text-6xl"></i>
-                            </div>
-                        </div>
+    <section class="max-w-4xl mx-auto">
+        <h2 data-i18n="about_heading" class="text-3xl font-bold text-gray-800 mb-8">About Me</h2>
+        
+        <div class="flex flex-col md:flex-row gap-8">
+            <div class="md:w-1/3">
+                <div class="bg-gray-200 rounded-xl overflow-hidden aspect-square">
+                    <div class="w-full h-full flex items-center justify-center bg-blue-100 text-blue-600">
+                        <i class="fas fa-user-tie text-6xl"></i>
                     </div>
-                    
-                    <div class="md:w-2/3">
-                        <p class="text-gray-700 mb-6">
-                            I am a passionate data analyst with expertise in Python, Excel, and data visualization tools. My goal is to transform complex data into clear insights that drive business decisions. With a strong foundation in statistical analysis and machine learning, I help organizations uncover patterns and opportunities in their data.
-                        </p>
-                        
-                        
-                        
-                        <div class="mb-6">
-                            <h3 class="text-xl font-semibold mb-4">Skills</h3>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Python</span>
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full">Pandas</span>
-                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">NumPy</span>
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full">Excel</span>
-                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full">Power BI</span>
-                                <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full">SQL</span>
-                                
-                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full">Data Visualization</span>
-                            </div>
+                </div>
+            </div>
+            
+            <div class="md:w-2/3">
+                <p data-i18n="about_text" class="text-gray-700 mb-6 text-lg leading-relaxed">
+                    I am a passionate data analyst with expertise in Python, Excel, and data visualization tools. My goal is to transform complex data into clear insights that drive business decisions. With a strong foundation in statistical analysis and machine learning, I help organizations uncover patterns and opportunities in their data.
+                </p>
+                
+                <div class="mb-8">
+                    <h3 data-i18n="skills_label" class="text-xl font-semibold mb-4 text-gray-800">Skills</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Python</span>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Pandas</span>
+                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">NumPy</span>
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">Excel</span>
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">Power BI</span>
+                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">SQL</span>
+                        <span data-i18n="skill_viz" class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Data Visualization</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 data-i18n="edu_label" class="text-xl font-semibold mb-4 text-gray-800">Education</h3>
+                    <div class="space-y-6">
+                        <div class="education-item border-l-4 border-blue-500 pl-4 rtl:pr-4 rtl:pl-0">
+                            <h4 data-i18n="edu_degree_1" class="font-bold text-gray-800">Bachelor Degree in Computer Science</h4>
+                            <p class="text-gray-600"><span data-i18n="edu_school_1">King Khalid University</span> | 2024</p>
                         </div>
-                        
-                        <div>
-                            <h3 class="text-xl font-semibold mb-4">Education</h3>
-                            <div class="space-y-4">
-                                <div class="border-l-4 border-blue-500 pl-4">
-                                    <h4 class="font-medium">Bachelor Dgree in Computer Science</h4>
-                                    <p class="text-gray-600">King Khalid University | 2024</p>
-                                </div>
-                                <div class="border-l-4 border-blue-500 pl-4">
-                                    <h4 class="font-medium">Data Analysis with Python</h4>
-                                    <p class="text-gray-600">IBM | 2025</p>
-                                </div>
-                            </div>
+                        <div class="education-item border-l-4 border-blue-500 pl-4 rtl:pr-4 rtl:pl-0">
+                            <h4 data-i18n="edu_degree_2" class="font-bold text-gray-800">Data Analysis with Python</h4>
+                            <p class="text-gray-600"><span data-i18n="edu_school_2">IBM</span> | 2025</p>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
+    </section>
+</div>
 
         <!-- Projects Page -->
         <div id="projects" class="page">
-            <section class="max-w-6xl mx-auto">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8">My Projects</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Project 1 -->
-                    <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
-                        <div class="h-48 bg-blue-100 flex items-center justify-center">
-                            <i class="fas fa-film text-6xl text-blue-600"></i>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">Movie Review Sentiment Analysis</h3>
-                            <p class="text-gray-600 mb-4">Analyzes 50K IMDb reviews using TF-IDF and Naive Bayes with visualizations.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">pandas</span>
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">scikit-learn</span>
-                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">nltk</span>
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">matplotlib</span>
-                            </div>
-                            <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/movie-review-sentiment-analysis-using-naive-bayes" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-                                View Project <i class="fas fa-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Project 2 -->
-                    <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
-                        <div class="h-48 bg-green-100 flex items-center justify-center">
-                            <i class="fas fa-heartbeat text-6xl text-green-600"></i>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">Diabetes Prediction & EDA</h3>
-                            <p class="text-gray-600 mb-4">Diabetes prediction using Logistic Regression with comprehensive EDA.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">pandas</span>
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">seaborn</span>
-                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">scikit-learn</span>
-                            </div>
-                            <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/diabetes-prediction-and-exploratory-data-analysis" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-                                View Project <i class="fas fa-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Project 3 -->
-                    <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
-                        <div class="h-48 bg-yellow-100 flex items-center justify-center">
-                            <i class="fas fa-store text-6xl text-yellow-600"></i>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">Retail Sales & Profit Analysis</h3>
-                            <p class="text-gray-600 mb-4">Analyzes Superstore dataset with monthly trends and regional performance.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">pandas</span>
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">matplotlib</span>
-                            </div>
-                            <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/retail-sales-profit-analysis-using-superstore-da" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-                                View Project <i class="fas fa-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Project 4 -->
-                    <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
-                        <div class="h-48 bg-purple-100 flex items-center justify-center">
-                            <i class="fas fa-chart-line text-6xl text-purple-600"></i>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">Stock Price Forecasting</h3>
-                            <p class="text-gray-600 mb-4">Uses historical daily returns to predict next-day closing prices with Random Forest.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">pandas</span>
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">yfinance</span>
-                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">scikit-learn</span>
-                            </div>
-                            <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/stock-price-forecasting-using-historical-daily-ret" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-                                View Project <i class="fas fa-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Project 5 -->
-                    <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
-                        <div class="h-48 bg-red-100 flex items-center justify-center">
-                            <i class="fas fa-futbol text-6xl text-red-600"></i>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">FIFA World Cup Analysis</h3>
-                            <p class="text-gray-600 mb-4">Analyzes historical match data for team performance and trends.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">pandas</span>
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">seaborn</span>
-                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">matplotlib</span>
-                            </div>
-                            <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/fifa-world-cup-match-data-analysis" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-                                View Project <i class="fas fa-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Project 6 -->
-                    <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
-                        <div class="h-48 bg-green-100 flex items-center justify-center">
-                            <i class="fas fa-virus text-6xl text-green-600"></i>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">COVID-19 Analysis</h3>
-                            <p class="text-gray-600 mb-4">Analyzes global COVID-19 trends with interactive visualizations.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">pandas</span>
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">plotly</span>
-                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">seaborn</span>
-                            </div>
-                            <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/covid-19-data-analysis-and-visualization" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-                                View Project <i class="fas fa-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
+    <section class="max-w-6xl mx-auto">
+        <h2 data-i18n="nav_projects" class="text-3xl font-bold text-gray-800 mb-8">My Projects</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 bg-blue-100 flex items-center justify-center">
+                    <i class="fas fa-film text-6xl text-blue-600"></i>
                 </div>
-            </section>
-        </div>
-
-        <!-- CV Page -->
-        <div id="cv" class="page">
-            <section class="max-w-4xl mx-auto">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8">My Resume</h2>
-                
-                <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                    <div class="p-8">
-                        <div class="flex flex-col md:flex-row justify-between items-start mb-8">
-                            <div>
-                                <h1 class="text-3xl font-bold text-gray-800">Abdulmajeed Alqahtani</h1>
-                                <p class="text-gray-600">Data Analyst</p>
-                            </div>
-                            <div class="mt-4 md:mt-0">
-                                <p class="text-gray-700"><i class="fas fa-envelope mr-2"></i> AlqhtaniAbdulmaajeed@gmail.com</p>
-                                <p class="text-gray-700"><i class="fas fa-phone mr-2"></i> +966 50 823 0309</p>
-                                <p class="text-gray-700"><i class="fas fa-map-marker-alt mr-2"></i> Abha, Saudi Arabia</p>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-8">
-                            <h2 class="text-xl font-semibold border-b pb-2 mb-4 text-gray-800">Professional Summary</h2>
-                            <p class="text-gray-700">
-                                I am a passionate data analyst with expertise in Python, Excel, and data visualization tools. My goal is to transform complex data into clear insights that drive business decisions. With a strong foundation in statistical analysis and machine learning, I help organizations uncover patterns and opportunities in their data.
-                            </p>
-                        </div>
-                        
-                        <div class="mb-8">
-                            <h2 class="text-xl font-semibold border-b pb-2 mb-4 text-gray-800">Work Experience</h2>
-                            
-                            <div class="mb-6">
-                                <h3 class="font-medium text-lg">IT Department Intern</h3>
-                                <p class="text-gray-600">IT Department, Al-Wadyain Municipality |  January 2022 – April 2022   </p>
-                                <ul class="list-disc pl-5 mt-2 text-gray-700 space-y-1">
-                                    <li>Provided technical support to employees by troubleshooting hardware and software issues.  </li>
-                                    <li>Assisted in maintaining internal networks and resolving operating system errors.</li>
-                                    <li>Worked on the attendance and leave tracking system to ensure accurate employee records. </li>
-                                </ul>
-                            </div>
-                            
-                            <div class="mb-6">
-                                <h3 class="font-medium text-lg">Graduation Project</h3>
-                                <p class="text-gray-600">Saudi2Go | January 2024 – May 2024 </p>
-                                <ul class="list-disc pl-5 mt-2 text-gray-700 space-y-1">
-                                    <li>Developed an application to assist tourists in Saudi Arabia by displaying nearby attractions based on their location.  </li>
-                                    <li>Utilized Flutter and Dart for designing and programming the application</li>
-                                    <li>Ensured a seamless user experience by creating an intuitive and user-friendly interface.</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-8">
-                            <h2 class="text-xl font-semibold border-b pb-2 mb-4 text-gray-800">Education</h2>
-                            <div class="mb-4">
-                                <h3 class="font-medium">Bachelor Dgree in Computer Science</h3>
-                                <p class="text-gray-600">King Khalid University | 2024</p>
-                            </div>
-                            <div>
-                                <h3 class="font-medium">Data Analysis with Python </h3>
-                                <p class="text-gray-600">IBM | 2025</p>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h2 class="text-xl font-semibold border-b pb-2 mb-4 text-gray-800">Skills</h2>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <h3 class="font-medium mb-2">Technical Skills</h3>
-                                    <ul class="space-y-1 text-gray-700">
-                                        <li>Python (Pandas, NumPy, Scikit-learn)</li>
-                                        <li>SQL (MySQL)</li>
-                                        <li>Excel (Advanced Formulas)</li>
-                                        <li>Power BI </li>
-                                      
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h3 class="font-medium mb-2">Soft Skills</h3>
-                                    <ul class="space-y-1 text-gray-700">
-                                        
-                                        <li>Problem Solving</li>
-                                        <li>Team Leadership</li>
-                                        <li>Project Management</li>
-                                        <li>Communication</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gray-50 px-8 py-6 flex flex-col sm:flex-row justify-between items-center">
-                        <p class="text-gray-600 mb-4 sm:mb-0">Last updated: August 2025</p>
-                        <div class="flex flex-wrap gap-4">
-                            <a href="https://drive.google.com/uc?export=download&id=1nuhf4yJUADXPgGejSbCy90TOYWLZygHX" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition flex items-center">
-                                <i class="fas fa-download mr-2"></i> Download Resume
-                            </a>
-                            <button onclick="window.print()" class="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 px-6 py-2 rounded-lg transition flex items-center">
-                                <i class="fas fa-print mr-2"></i> Print This Page
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- Contact Page -->
-        <div id="contact" class="page">
-            <section class="max-w-4xl mx-auto">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8">Get In Touch</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Contact Information</h3>
-                        
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div class="bg-blue-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-envelope text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-800">Email</h4>
-                                    <p class="text-gray-600">AlqhtaniAbdulmaajeed@gmail.com</p>
-                                    <button onclick="window.location.href='mailto:AlqhtaniAbdulmaajeed@gmail.com'" class="text-blue-600 hover:text-blue-800 text-sm mt-1 flex items-center">
-                                        Send email <i class="fas fa-arrow-right ml-1 text-xs"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="bg-green-100 p-3 rounded-full mr-4">
-                                    <i class="fab fa-linkedin-in text-green-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-800">LinkedIn</h4>
-                                    <p class="text-gray-600">https://www.linkedin.com/in/abdulmajeed-alqhtani-8aa771342/</p>
-                                    <button onclick="window.open('https://www.linkedin.com/in/abdulmajeed-alqhtani-8aa771342', '_blank')" class="text-blue-600 hover:text-blue-800 text-sm mt-1 flex items-center">
-                                        View profile <i class="fas fa-arrow-right ml-1 text-xs"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="bg-red-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-phone text-red-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-800">Phone</h4>
-                                    <p class="text-gray-600">+966 50 823 0309</p>
-                                    <button onclick="window.location.href='tel:+966508230309'" class="text-blue-600 hover:text-blue-800 text-sm mt-1 flex items-center">
-                                        Call now <i class="fas fa-arrow-right ml-1 text-xs"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="bg-purple-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-map-marker-alt text-purple-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-800">Location</h4>
-                                    <p class="text-gray-600">Abha, Saudi Arabia</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-8">
-                            <h3 class="text-xl font-semibold mb-4 text-gray-800">Availability</h3>
-                            <p class="text-gray-700 mb-4">
-                                I'm currently available for freelance projects and full-time opportunities. 
-                                Feel free to reach out for collaborations or just to say hello!
-                            </p>
-                            <div class="flex items-center">
-                                <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-                                <span class="text-gray-700">Available for new opportunities</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Send Me a Message</h3>
-                        <form class="space-y-4" action="https://formsubmit.co/AlqhtaniAbdulmaajeed@gmail.com" method="POST">
-                            <input type="hidden" name="_captcha" value="false">
-                            <input type="hidden" name="_subject" value="New Portfolio Contact Form Submission">
-                            <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
-                            <input type="hidden" name="_template" value="table">
-                            <div>
-                                <label for="name" class="block text-gray-700 mb-1">Name</label>
-                                <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            </div>
-                            
-                            <div>
-                                <label for="email" class="block text-gray-700 mb-1">Email</label>
-                                <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            </div>
-                            
-                            <div>
-                                <label for="subject" class="block text-gray-700 mb-1">Subject</label>
-                                <input type="text" id="subject" name="subject" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            </div>
-                            
-                            <div>
-                                <label for="message" class="block text-gray-700 mb-1">Message</label>
-                                <textarea id="message" name="message" rows="5" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                            </div>
-                            
-                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition w-full flex items-center justify-center">
-                                <i class="fas fa-paper-plane mr-2"></i> Send Message
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <h2 class="text-xl font-bold mb-2">Abdulmajeed Alqahtani</h2>
-                    <p class="text-gray-400">Data Analyst | Python | Excel </p>
-                </div>
-                
-                <div class="flex space-x-6">
-                    <a href="https://www.linkedin.com/in/abdulmajeed-alqhtani-8aa771342/" target="_blank" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-linkedin-in text-xl"></i>
-                    </a>
-                    <a href="mailto:AlqhtaniAbdulmaajeed@gmail.com" class="text-gray-400 hover:text-white transition">
-                        <i class="fas fa-envelope text-xl"></i>
-                    </a>
-                    <a href="tel:+966508230309" class="text-gray-400 hover:text-white transition">
-                        <i class="fas fa-phone text-xl"></i>
+                <div class="p-6">
+                    <h3 data-i18n="p1_t" class="text-xl font-semibold mb-2">Movie Review Sentiment Analysis</h3>
+                    <p data-i18n="p1_d" class="text-gray-600 mb-4">Analyzes 50K IMDb reviews using TF-IDF and Naive Bayes with visualizations.</p>
+                    <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/movie-review-sentiment-analysis-using-naive-bayes" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                        <span data-i18n="view_project">View Project</span> <i class="fas fa-arrow-right ms-2 rtl:rotate-180"></i>
                     </a>
                 </div>
             </div>
             
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 Abdulmajeed Alqahtani. All rights reserved.</p>
+            <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 bg-green-100 flex items-center justify-center">
+                    <i class="fas fa-heartbeat text-6xl text-green-600"></i>
+                </div>
+                <div class="p-6">
+                    <h3 data-i18n="p2_t" class="text-xl font-semibold mb-2">Diabetes Prediction & EDA</h3>
+                    <p data-i18n="p2_d" class="text-gray-600 mb-4">Diabetes prediction using Logistic Regression with comprehensive EDA.</p>
+                    <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/diabetes-prediction-and-exploratory-data-analysis" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                        <span data-i18n="view_project">View Project</span> <i class="fas fa-arrow-right ms-2 rtl:rotate-180"></i>
+                    </a>
+                </div>
+            </div>
+    
+            <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 bg-yellow-100 flex items-center justify-center">
+                    <i class="fas fa-store text-6xl text-yellow-600"></i>
+                </div>
+                <div class="p-6">
+                    <h3 data-i18n="p3_t" class="text-xl font-semibold mb-2">Retail Sales & Profit Analysis</h3>
+                    <p data-i18n="p3_d" class="text-gray-600 mb-4">Analyzes Superstore dataset with monthly trends and regional performance.</p>
+                    <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/retail-sales-profit-analysis-using-superstore-da" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                        <span data-i18n="view_project">View Project</span> <i class="fas fa-arrow-right ms-2 rtl:rotate-180"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 bg-purple-100 flex items-center justify-center">
+                    <i class="fas fa-chart-line text-6xl text-purple-600"></i>
+                </div>
+                <div class="p-6">
+                    <h3 data-i18n="p4_t" class="text-xl font-semibold mb-2">Stock Price Forecasting</h3>
+                    <p data-i18n="p4_d" class="text-gray-600 mb-4">Uses historical daily returns to predict next-day closing prices with Random Forest.</p>
+                    <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/stock-price-forecasting-using-historical-daily-ret" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                        <span data-i18n="view_project">View Project</span> <i class="fas fa-arrow-right ms-2 rtl:rotate-180"></i>
+                    </a>
+                </div>
+            </div>
+   
+            <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 bg-red-100 flex items-center justify-center">
+                    <i class="fas fa-futbol text-6xl text-red-600"></i>
+                </div>
+                <div class="p-6">
+                    <h3 data-i18n="p5_t" class="text-xl font-semibold mb-2">FIFA World Cup Analysis</h3>
+                    <p data-i18n="p5_d" class="text-gray-600 mb-4">Analyzes historical match data for team performance and trends.</p>
+                    <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/fifa-world-cup-match-data-analysis" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                        <span data-i18n="view_project">View Project</span> <i class="fas fa-arrow-right ms-2 rtl:rotate-180"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="project-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 bg-green-100 flex items-center justify-center">
+                    <i class="fas fa-virus text-6xl text-green-600"></i>
+                </div>
+                <div class="p-6">
+                    <h3 data-i18n="p6_t" class="text-xl font-semibold mb-2">COVID-19 Analysis</h3>
+                    <p data-i18n="p6_d" class="text-gray-600 mb-4">Analyzes global COVID-19 trends with interactive visualizations.</p>
+                    <a href="https://www.kaggle.com/code/abdulmajeedalqhtani/covid-19-data-analysis-and-visualization" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                        <span data-i18n="view_project">View Project</span> <i class="fas fa-arrow-right ms-2 rtl:rotate-180"></i>
+                    </a>
+                </div>
             </div>
         </div>
-    </footer>
-
+    </section>
+</div>
+        <!-- CV Page -->
+        <div id="cv" class="page">
+    <section class="max-w-4xl mx-auto">
+        <h2 data-i18n="cv_heading" class="text-3xl font-bold text-gray-800 mb-8">My Resume</h2>
+        
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="p-8">
+                <div class="flex flex-col md:flex-row justify-between items-start mb-8 border-b pb-6">
+                    <div>
+                        <h1 data-i18n="name" class="text-3xl font-bold text-gray-800">Abdulmajeed Alqahtani</h1>
+                        <p data-i18n="title" class="text-gray-600 text-lg">Data Analyst</p>
+                    </div>
+                    <div class="mt-4 md:mt-0 text-gray-700 space-y-1">
+                        <p><i class="fas fa-envelope me-2"></i> AlqhtaniAbdulmaajeed@gmail.com</p>
+                        <p dir="ltr" class="rtl:text-right"><i class="fas fa-phone me-2"></i> +966 50 823 0309</p>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> <span data-i18n="location">Abha, Saudi Arabia</span></p>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h2 data-i18n="summary_h" class="text-xl font-semibold border-b pb-2 mb-4 text-gray-800">Professional Summary</h2>
+                    <p data-i18n="about_text" class="text-gray-700 leading-relaxed">
+                        I am a passionate data analyst with expertise in Python, Excel, and data visualization tools...
+                    </p>
+                </div>
+                <div class="mb-8">
+    <h2 data-i18n="edu_label" class="text-xl font-semibold border-b pb-2 mb-4 text-gray-800">Education</h2>
+    <div class="space-y-4">
+        <div class="mb-4">
+            <h3 data-i18n="edu_degree_1" class="font-bold text-gray-800">Bachelor Degree in Computer Science</h3>
+            <p class="text-gray-600"><span data-i18n="edu_school_1">King Khalid University</span> | 2024</p>
+        </div>
+        <div>
+            <h3 data-i18n="edu_degree_2" class="font-bold text-gray-800">Data Analysis with Python</h3>
+            <p class="text-gray-600"><span data-i18n="edu_school_2">IBM</span> | 2025</p>
+        </div>
+    </div>
+</div>
+                
+                <div class="mb-8">
+                    <h2 data-i18n="exp_h" class="text-xl font-semibold border-b pb-2 mb-4 text-gray-800">Work Experience</h2>
+                    
+                    <div class="mb-6">
+                        <h3 data-i18n="job_1_t" class="font-bold text-lg">IT Department Intern</h3>
+                        <p class="text-gray-600"><span data-i18n="job_1_loc">Al-Wadyain Municipality</span> | <span data-i18n="job_1_date">Jan 2022 – Apr 2022</span></p>
+                        <ul class="list-disc ms-5 mt-2 text-gray-700 space-y-1">
+                            <li data-i18n="job_1_l1">Provided technical support to employees...</li>
+                            <li data-i18n="job_1_l2">Assisted in maintaining internal networks...</li>
+                            <li data-i18n="job_1_l3">Worked on the attendance and leave tracking system.</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 data-i18n="job_2_t" class="font-bold text-lg">Graduation Project</h3>
+                        <p class="text-gray-600">Saudi2Go | <span data-i18n="job_2_date">Jan 2024 – May 2024</span></p>
+                        <ul class="list-disc ms-5 mt-2 text-gray-700 space-y-1">
+                            <li data-i18n="job_2_l1">Developed an application to assist tourists...</li>
+                            <li data-i18n="job_2_l2">Utilized Flutter and Dart for programming.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h2 data-i18n="skills_label" class="text-xl font-semibold border-b pb-2 mb-4 text-gray-800">Skills</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 data-i18n="tech_skills_h" class="font-bold mb-2 text-blue-600">Technical Skills</h3>
+                            <ul class="space-y-1 text-gray-700">
+                                <li>Python (Pandas, NumPy, Scikit-learn)</li>
+                                <li>SQL (MySQL)</li>
+                                <li>Excel (Advanced Formulas)</li>
+                                <li>Power BI</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 data-i18n="soft_skills_h" class="font-bold mb-2 text-green-600">Soft Skills</h3>
+                            <ul class="space-y-1 text-gray-700">
+                                <li data-i18n="soft_1">Problem Solving</li>
+                                <li data-i18n="soft_2">Team Leadership</li>
+                                <li data-i18n="soft_3">Project Management</li>
+                                <li data-i18n="soft_4">Communication</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 px-8 py-6 flex flex-col sm:flex-row justify-between items-center border-t">
+                <p class="text-gray-600 mb-4 sm:mb-0"><span data-i18n="last_updated">Last updated</span>: August 2025</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="https://drive.google.com/uc?export=download&id=1nuhf4yJUADXPgGejSbCy90TOYWLZygHX" target="_blank" class="bg-blue-600 text-white px-6 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-download me-2"></i> <span data-i18n="btn_cv">Download CV</span>
+                    </a>
+                    <button onclick="window.print()" class="bg-white text-gray-800 border px-6 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-print me-2"></i> <span data-i18n="print_btn">Print Page</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+    <section class="max-w-4xl mx-auto">
+        <h2 data-i18n="contact_h" class="text-3xl font-bold text-gray-800 mb-8">Get In Touch</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <h3 data-i18n="contact_info_h" class="text-xl font-semibold mb-4 text-gray-800">Contact Information</h3>
+                
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="bg-blue-100 p-3 rounded-full me-4">
+                            <i class="fas fa-envelope text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h4 data-i18n="email_label" class="font-medium text-gray-800">Email</h4>
+                            <p class="text-gray-600">AlqhtaniAbdulmaajeed@gmail.com</p>
+                            <button onclick="window.location.href='mailto:AlqhtaniAbdulmaajeed@gmail.com'" class="text-blue-600 hover:text-blue-800 text-sm mt-1 flex items-center">
+                                <span data-i18n="send_email_btn">Send email</span> <i class="fas fa-arrow-right ms-1 text-xs rtl:rotate-180"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="bg-green-100 p-3 rounded-full me-4">
+                            <i class="fab fa-linkedin-in text-green-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">LinkedIn</h4>
+                            <p class="text-gray-600 text-sm truncate w-48 md:w-full">abdulmajeed-alqhtani-8aa771342</p>
+                            <button onclick="window.open('https://www.linkedin.com/in/abdulmajeed-alqhtani-8aa771342', '_blank')" class="text-blue-600 hover:text-blue-800 text-sm mt-1 flex items-center">
+                                <span data-i18n="view_profile_btn">View profile</span> <i class="fas fa-arrow-right ms-1 text-xs rtl:rotate-180"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="bg-red-100 p-3 rounded-full me-4">
+                            <i class="fas fa-phone text-red-600"></i>
+                        </div>
+                        <div>
+                            <h4 data-i18n="phone_label" class="font-medium text-gray-800">Phone</h4>
+                            <p dir="ltr" class="text-gray-600 rtl:text-right">+966 50 823 0309</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 p-4 bg-blue-50 rounded-lg">
+                    <h3 data-i18n="availability_h" class="text-lg font-semibold mb-2 text-gray-800">Availability</h3>
+                    <p data-i18n="availability_text" class="text-gray-700 text-sm mb-3">I'm currently available for freelance projects and full-time opportunities.</p>
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 bg-green-500 rounded-full me-2"></div>
+                        <span data-i18n="availability_status" class="text-gray-700 text-sm font-medium">Available for new opportunities</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <h3 data-i18n="message_h" class="text-xl font-semibold mb-4 text-gray-800">Send Me a Message</h3>
+                <form class="space-y-4" action="https://formsubmit.co/AlqhtaniAbdulmaajeed@gmail.com" method="POST">
+                    <div>
+                        <label data-i18n="form_name" class="block text-gray-700 mb-1">Name</label>
+                        <input type="text" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label data-i18n="form_email" class="block text-gray-700 mb-1">Email</label>
+                        <input type="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label data-i18n="form_msg" class="block text-gray-700 mb-1">Message</label>
+                        <textarea name="message" rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+                    </div>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition w-full flex items-center justify-center font-bold">
+                        <i class="fas fa-paper-plane me-2"></i> <span data-i18n="send_msg_btn">Send Message</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+    <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0 text-center md:text-left rtl:md:text-right">
+                <h2 data-i18n="name" class="text-xl font-bold mb-2">Abdulmajeed Alqahtani</h2>
+                <p data-i18n="footer_subtitle" class="text-gray-400">Data Analyst | Python | Excel</p>
+            </div>
+            
+            <div class="flex space-x-6 rtl:space-x-reverse">
+                <a href="https://www.linkedin.com/in/abdulmajeed-alqhtani-8aa771342/" target="_blank" class="text-gray-400 hover:text-white transition">
+                    <i class="fab fa-linkedin-in text-xl"></i>
+                </a>
+                <a href="mailto:AlqhtaniAbdulmaajeed@gmail.com" class="text-gray-400 hover:text-white transition">
+                    <i class="fas fa-envelope text-xl"></i>
+                </a>
+                <a href="tel:+966508230309" class="text-gray-400 hover:text-white transition">
+                    <i class="fas fa-phone text-xl"></i>
+                </a>
+            </div>
+        </div>
+ 
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2025 <span data-i18n="name">Abdulmajeed Alqahtani</span>. <span data-i18n="rights">All rights reserved.</span></p>
+        </div>
+    </div>
+</footer>
     <script>
+        const translations = {
+    en: {
+        // Header & Navigation
+        browser_title: "Abdulmajeed Alqahtani | Data Analyst",
+        name: "Abdulmajeed Alqahtani",
+        nav_home: "Home",
+        nav_about: "About",
+        nav_projects: "Projects",
+        nav_cv: "CV",
+        nav_contact: "Contact",
+
+        // Home Page
+        hero_title: "Abdulmajeed Alqahtani",
+        hero_subtitle: "Data Analysis, Python, and Excel",
+        btn_about: "About Me",
+        btn_projects: "My Projects",
+        btn_cv: "CV",
+        btn_contact: "Contact Me",
+        skill_title_1: "Data Analysis",
+        skill_desc_1: "Transforming raw data into meaningful insights that drive business decisions.",
+        skill_title_2: "Python",
+        skill_desc_2: "Building efficient data pipelines.",
+        skill_title_3: "Excel",
+        skill_desc_3: "Creating powerful spreadsheets and dashboards.",
+
+        // About Page
+        about_heading: "About Me",
+        about_text: "I am a passionate data analyst with expertise in Python, Excel, and data visualization tools. My goal is to transform complex data into clear insights that drive business decisions. With a strong foundation in statistical analysis and machine learning, I help organizations uncover patterns and opportunities in their data.",
+        skills_label: "Skills",
+        skill_viz: "Data Visualization",
+        edu_label: "Education",
+        edu_degree_1: "Bachelor Degree in Computer Science",
+        edu_school_1: "King Khalid University",
+        edu_degree_2: "Data Analysis with Python",
+        edu_school_2: "IBM",
+
+        // Projects Page
+        view_project: "View Project",
+        p1_t: "Movie Review Sentiment Analysis",
+        p1_d: "Analyzes 50K IMDb reviews using TF-IDF and Naive Bayes with visualizations.",
+        p2_t: "Diabetes Prediction & EDA",
+        p2_d: "Diabetes prediction using Logistic Regression with comprehensive EDA.",
+        p3_t: "Retail Sales & Profit Analysis",
+        p3_d: "Analyzes Superstore dataset with monthly trends and regional performance.",
+        p4_t: "Stock Price Forecasting",
+        p4_d: "Uses historical daily returns to predict next-day closing prices with Random Forest.",
+        p5_t: "FIFA World Cup Analysis",
+        p5_d: "Analyzes historical match data for team performance and trends.",
+        p6_t: "COVID-19 Analysis",
+        p6_d: "Analyzes global COVID-19 trends with interactive visualizations.",
+
+        // CV Page
+        cv_heading: "My Resume",
+        location: "Abha, Saudi Arabia",
+        summary_h: "Professional Summary",
+        exp_h: "Work Experience",
+        job_1_t: "IT Department Intern",
+        job_1_loc: "Al-Wadyain Municipality",
+        job_1_date: "January 2022 – April 2022",
+        job_1_l1: "Provided technical support to employees by troubleshooting hardware and software issues.",
+        job_1_l2: "Assisted in maintaining internal networks and resolving operating system errors.",
+        job_1_l3: "Worked on the attendance and leave tracking system to ensure accurate records.",
+        job_2_t: "Graduation Project",
+        job_2_loc: "Saudi2Go",
+        job_2_date: "January 2024 – May 2024",
+        job_2_l1: "Developed an application to assist tourists in Saudi Arabia by displaying nearby attractions.",
+        job_2_l2: "Utilized Flutter and Dart for designing and programming the application.",
+        tech_skills_h: "Technical Skills",
+        soft_skills_h: "Soft Skills",
+        soft_1: "Problem Solving",
+        soft_2: "Team Leadership",
+        soft_3: "Project Management",
+        soft_4: "Communication",
+        last_updated: "Last updated",
+        print_btn: "Print This Page",
+
+        // Contact Page
+        contact_h: "Get In Touch",
+        contact_info_h: "Contact Information",
+        email_label: "Email",
+        send_email_btn: "Send email",
+        view_profile_btn: "View profile",
+        phone_label: "Phone",
+        availability_h: "Availability",
+        availability_text: "I'm currently available for freelance projects and full-time opportunities. Feel free to reach out!",
+        availability_status: "Available for new opportunities",
+        message_h: "Send Me a Message",
+        form_name: "Name",
+        form_email: "Email",
+        form_subject: "Subject",
+        form_msg: "Message",
+        send_msg_btn: "Send Message",
+
+        // Footer
+        footer_subtitle: "Data Analyst | Python | Excel",
+        rights: "All rights reserved."
+    },
+    ar: {
+        // الهدير والتنقل
+        browser_title: "عبدالمجيد القحطاني | محلل بيانات",
+        name: "عبدالمجيد القحطاني",
+        nav_home: "الرئيسية",
+        nav_about: "عني",
+        nav_projects: "المشاريع",
+        nav_cv: "السيرة الذاتية",
+        nav_contact: "تواصل معي",
+
+        // الصفحة الرئيسية
+        hero_title: "عبدالمجيد القحطاني",
+        hero_subtitle: "تحليل البيانات، بايثون، وإكسل",
+        btn_about: "عني",
+        btn_projects: "مشاريعي",
+        btn_cv: " السيرة الذاتية",
+        btn_contact: "تواصل معي",
+        skill_title_1: "تحليل البيانات",
+        skill_desc_1: "تحويل البيانات الخام إلى رؤى ذات مغزى تدعم قرارات العمل.",
+        skill_title_2: "بايثون",
+        skill_desc_2: "بناء مسارات بيانات فعالة.",
+        skill_title_3: "إكسل",
+        skill_desc_3: "إنشاء جداول بيانات ولوحات تحكم قوية.",
+
+        // صفحة About
+        about_heading: "عن حياتي المهنية",
+        about_text: "أنا محلل بيانات شغوف لدي خبرة واسعة في لغة بايثون، وإكسل، وأدوات تصور البيانات. هدفي هو تحويل البيانات المعقدة إلى رؤى واضحة تساهم في اتخاذ قرارات العمل المدروسة. من خلال أساس قوي في التحليل الإحصائي وتعلم الآلة، أساعد المنظمات على كشف الأنماط والفرص الكامنة في بياناتهم.",
+        skills_label: "المهارات المهنية",
+        skill_viz: "تصور البيانات",
+        edu_label: "التعليم والشهادات",
+        edu_degree_1: "بكالوريوس في علوم الحاسب",
+        edu_school_1: "جامعة الملك خالد",
+        edu_degree_2: "تحليل البيانات باستخدام بايثون",
+        edu_school_2: "IBM",
+
+        // صفحة المشاريع
+        view_project: "عرض المشروع",
+        p1_t: "تحليل مشاعر مراجعات الأفلام",
+        p1_d: "تحليل ٥٠ ألف مراجعة من IMDb باستخدام خوارزميات Naive Bayes وتصور البيانات.",
+        p2_t: "التنبؤ بمرض السكري",
+        p2_d: "نموذج للتنبؤ بالإصابة بالسكري باستخدام Logistic Regression مع تحليل استكشافي شامل.",
+        p3_t: "تحليل مبيعات وأرباح التجزئة",
+        p3_d: "تحليل بيانات المتجر الشامل (Superstore) والتوجهات الشهرية والأداء الإقليمي.",
+        p4_t: "التنبؤ بأسعار الأسهم",
+        p4_d: "استخدام العوائد اليومية التاريخية للتنبؤ بأسعار الإغلاق باستخدام الغابات العشوائية.",
+        p5_t: "تحليل كأس العالم لكرة القدم",
+        p5_d: "تحليل بيانات المباريات التاريخية لأداء الفرق والتوجهات العامة.",
+        p6_t: "تحليل بيانات كوفيد-19",
+        p6_d: "تحليل توجهات الجائحة عالمياً مع رسوم بيانية تفاعلية.",
+
+        // صفحة السيرة الذاتية
+        cv_heading: "السيرة الذاتية",
+        location: "أبها، المملكة العربية السعودية",
+        summary_h: "الملخص المهني",
+        exp_h: "الخبرة العملية",
+        job_1_t: "متدرب في قسم تقنية المعلومات",
+        job_1_loc: "بلدية الواديين",
+        job_1_date: "يناير ٢٠٢٢ – أبريل ٢٠٢٢",
+        job_1_l1: "تقديم الدعم الفني للموظفين واستكشاف مشكلات الأجهزة والبرامج وإصلاحها.",
+        job_1_l2: "المساعدة في صيانة الشبكات الداخلية ومعالجة أخطاء أنظمة التشغيل.",
+        job_1_l3: "العمل على نظام تتبع الحضور والانصراف لضمان دقة سجلات الموظفين.",
+        job_2_t: "مشروع التخرج",
+        job_2_loc: "سعودي تو جو (Saudi2Go)",
+        job_2_date: "يناير ٢٠٢٤ – مايو ٢٠٢٤",
+        job_2_l1: "تطوير تطبيق لمساعدة السياح في السعودية من خلال عرض المعالم القريبة بناءً على الموقع.",
+        job_2_l2: "استخدام Flutter و Dart لتصميم وبرمجة التطبيق بواجهة مستخدم سلسة.",
+        tech_skills_h: "المهارات التقنية",
+        soft_skills_h: "المهارات الشخصية",
+        soft_1: "حل المشكلات",
+        soft_2: "القيادة الجماعية",
+        soft_3: "إدارة المشاريع",
+        soft_4: "التواصل الفعال",
+        last_updated: "آخر تحديث",
+        print_btn: "طباعة هذه الصفحة",
+
+        // صفحة الاتصال
+        contact_h: "تواصل معي",
+        contact_info_h: "معلومات الاتصال",
+        email_label: "البريد الإلكتروني",
+        send_email_btn: "إرسال بريد",
+        view_profile_btn: "عرض الملف الشخصي",
+        phone_label: "رقم الجوال",
+        availability_h: "التوفر الحالي",
+        availability_text: "أنا متاح حالياً للمشاريع الحرة وفرص العمل بدوام كامل. لا تتردد في التواصل معي!",
+        availability_status: "متاح لفرص عمل جديدة",
+        message_h: "أرسل لي رسالة",
+        form_name: "الاسم",
+        form_email: "البريد الإلكتروني",
+        form_subject: "الموضوع",
+        form_msg: "الرسالة",
+        send_msg_btn: "إرسال الرسالة",
+
+        // الفوتر
+        footer_subtitle: "محلل بيانات | بايثون | إكسل",
+        rights: "جميع الحقوق محفوظة."
+    }
+};
+        // متغير لمتابعة اللغة الحالية
+let currentLang = 'en';
+
+// كود تشغيل الزر
+document.getElementById('lang-toggle').addEventListener('click', () => {
+    // 1. تبديل اللغة
+    currentLang = currentLang === 'en' ? 'ar' : 'en';
+    
+    // 2. تغيير اتجاه الصفحة ولغتها
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+    
+    // 3. تغيير نص الزر نفسه
+    document.getElementById('lang-toggle').textContent = currentLang === 'en' ? 'العربية' : 'English';
+
+    // 4. استبدال كافة النصوص التي تحمل وسم data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[currentLang][key]) {
+            element.textContent = translations[currentLang][key];
+        }
+    });
+});
         // Show page function
         function showPage(pageId, pushState = true) {
             // Hide all pages
